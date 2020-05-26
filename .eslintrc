@@ -1,0 +1,28 @@
+{
+  "extends": ["react-app", "prettier/@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "root": true,
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": true,
+        "arrowParens": "always",
+        "trailingComma": "all"
+      }
+    ],
+    "prefer-template": "error",
+    "no-await-in-loop": 1,
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "single", "all", "multiple"]
+      }
+    ],
+    "react-hooks/exhaustive-deps": 1
+  }
+}

@@ -205,6 +205,11 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0.tgz#bbb3fbee98661c569034237cc03967ba99b4f250"
   integrity sha512-CYAOUCARwExnEixLdB6sDm2dIJ/YgEAKDM1MOeMeZu9Ld/bDgVo8aiWrXwcY7OBh+1Ea2uUcVRcxKk0GJvW7QA==
 
+"@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
+  version "7.8.3"
+  resolved "https://registry.npm.taobao.org/@babel/helper-plugin-utils/download/@babel/helper-plugin-utils-7.8.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fhelper-plugin-utils%2Fdownload%2F%40babel%2Fhelper-plugin-utils-7.8.3.tgz#9ea293be19babc0f52ff8ca88b34c3611b208670"
+  integrity sha1-nqKTvhm6vA9S/4yoizTDYRsghnA=
+
 "@babel/helper-regex@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/helper-regex/-/helper-regex-7.0.0.tgz#2c1718923b57f9bbe64705ffe5640ac64d9bdb27"
@@ -368,6 +373,14 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-optional-catch-binding" "^7.2.0"
 
+"@babel/plugin-proposal-optional-chaining@^7.9.0":
+  version "7.9.0"
+  resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-optional-chaining/download/@babel/plugin-proposal-optional-chaining-7.9.0.tgz#31db16b154c39d6b8a645292472b98394c292a58"
+  integrity sha1-MdsWsVTDnWuKZFKSRyuYOUwpKlg=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.3"
+    "@babel/plugin-syntax-optional-chaining" "^7.8.0"
+
 "@babel/plugin-proposal-unicode-property-regex@^7.4.0", "@babel/plugin-proposal-unicode-property-regex@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-unicode-property-regex/-/plugin-proposal-unicode-property-regex-7.4.4.tgz#501ffd9826c0b91da22690720722ac7cb1ca9c78"
@@ -439,6 +452,13 @@
   integrity sha512-bDe4xKNhb0LI7IvZHiA13kff0KEfaGX/Hv4lMA9+7TEc63hMNvfKo6ZFpXhKuEp+II/q35Gc4NoMeDZyaUbj9w==
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
+
+"@babel/plugin-syntax-optional-chaining@^7.8.0":
+  version "7.8.3"
+  resolved "https://registry.npm.taobao.org/@babel/plugin-syntax-optional-chaining/download/@babel/plugin-syntax-optional-chaining-7.8.3.tgz?cache=0&sync_timestamp=1578952519472&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fplugin-syntax-optional-chaining%2Fdownload%2F%40babel%2Fplugin-syntax-optional-chaining-7.8.3.tgz#4f69c2ab95167e0180cd5336613f8c5788f7d48a"
+  integrity sha1-T2nCq5UWfgGAzVM2YT+MV4j31Io=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.0"
 
 "@babel/plugin-syntax-typescript@^7.2.0":
   version "7.3.3"
@@ -1017,6 +1037,44 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
+"@fluentui/keyboard-key@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/@fluentui/keyboard-key/download/@fluentui/keyboard-key-0.2.0.tgz#8bbe4c27e0166a46007de8c54c55d6ed4b091e19"
+  integrity sha1-i75MJ+AWakYAfejFTFXW7UsJHhk=
+  dependencies:
+    tslib "^1.10.0"
+
+"@fluentui/react-focus@^7.12.2":
+  version "7.12.2"
+  resolved "https://registry.npm.taobao.org/@fluentui/react-focus/download/@fluentui/react-focus-7.12.2.tgz#85cae6fe1d5cea215738cf9fff4bc2d9bd1612d7"
+  integrity sha1-hcrm/h1c6iFXOM+f/0vC2b0WEtc=
+  dependencies:
+    "@fluentui/keyboard-key" "^0.2.0"
+    "@uifabric/merge-styles" "^7.14.0"
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/styling" "^7.12.12"
+    "@uifabric/utilities" "^7.20.0"
+    tslib "^1.10.0"
+
+"@fluentui/react-icons@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.npm.taobao.org/@fluentui/react-icons/download/@fluentui/react-icons-0.1.21.tgz#a9501802e689320b15c1401da7ae27d4beb5641c"
+  integrity sha1-qVAYAuaJMgsVwUAdp64n1L61ZBw=
+  dependencies:
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/styling" "^7.12.12"
+    "@uifabric/utilities" "^7.20.0"
+    tslib "^1.10.0"
+
+"@fluentui/react@^7.115.4":
+  version "7.115.4"
+  resolved "https://registry.npm.taobao.org/@fluentui/react/download/@fluentui/react-7.115.4.tgz#1b4851a505a748355fb8b64b05a10cabe19ade8d"
+  integrity sha1-G0hRpQWnSDVfuLZLBaEMq+Ga3o0=
+  dependencies:
+    "@uifabric/set-version" "^7.0.12"
+    office-ui-fabric-react "^7.115.4"
+    tslib "^1.10.0"
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -1161,10 +1219,10 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/yargs" "^12.0.9"
 
-"@microsoft/load-themed-styles@^1.7.13":
-  version "1.8.85"
-  resolved "https://registry.yarnpkg.com/@microsoft/load-themed-styles/-/load-themed-styles-1.8.85.tgz#69660be7821ed66c76e50d5200d9453f1df0d62d"
-  integrity sha512-U4X7d5uxfaFPNnn7sazISnGz0563echOO1EA3/DRc9fEQJqGecS7cJaFRpiq574vRgsCreZjvaGfJo6n1FzDUw==
+"@microsoft/load-themed-styles@^1.10.26":
+  version "1.10.50"
+  resolved "https://registry.npm.taobao.org/@microsoft/load-themed-styles/download/@microsoft/load-themed-styles-1.10.50.tgz#16b1a7fd82163cceb71796bbd088e44ba7591e54"
+  integrity sha1-FrGn/YIWPM63F5a70IjkS6dZHlQ=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1178,6 +1236,16 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
+
+"@reach/router@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.npm.taobao.org/@reach/router/download/@reach/router-1.3.3.tgz#58162860dce6c9449d49be86b0561b5ef46d80db"
+  integrity sha1-WBYoYNzmyUSdSb6GsFYbXvRtgNs=
+  dependencies:
+    create-react-context "0.3.0"
+    invariant "^2.2.3"
+    prop-types "^15.6.1"
+    react-lifecycles-compat "^3.0.4"
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
@@ -1317,6 +1385,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/history@*":
+  version "4.7.6"
+  resolved "https://registry.npm.taobao.org/@types/history/download/@types/history-4.7.6.tgz#ed8fc802c45b8e8f54419c2d054e55c9ea344356"
+  integrity sha1-7Y/IAsRbjo9UQZwtBU5Vyeo0Q1Y=
+
 "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
@@ -1348,6 +1421,14 @@
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
+
+"@types/reach__router@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.npm.taobao.org/@types/reach__router/download/@types/reach__router-1.3.5.tgz#14e1e981cccd3a5e50dc9e969a72de0b9d472f6d"
+  integrity sha1-FOHpgczNOl5Q3J6WmnLeC51HL20=
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
 
 "@types/react-dom@16.8.4":
   version "16.8.4"
@@ -1423,81 +1504,70 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@uifabric/fluent-theme@^0.16.7":
-  version "0.16.7"
-  resolved "https://registry.yarnpkg.com/@uifabric/fluent-theme/-/fluent-theme-0.16.7.tgz#b6a743875ef910d567c0b517591e5ec3047104ba"
-  integrity sha512-b38g0xl/+a6pjQx5lVOQRsAT6OlBXXel3a95mQ2Xa8dac77tiZv/x6QDLzNqN36L5O0HdQPRrqyPZ2o94xRvYQ==
+"@uifabric/foundation@^7.7.19":
+  version "7.7.19"
+  resolved "https://registry.npm.taobao.org/@uifabric/foundation/download/@uifabric/foundation-7.7.19.tgz#132f2cf28c09cfc52b9366913f9f39fb172d43b1"
+  integrity sha1-Ey8s8owJz8Urk2aRP585+xctQ7E=
   dependencies:
-    "@uifabric/merge-styles" "^6.17.0"
-    "@uifabric/set-version" "^1.1.3"
-    "@uifabric/styling" "^6.47.0"
-    "@uifabric/variants" "^6.14.1"
-    office-ui-fabric-react "^6.174.0"
-    tslib "^1.7.1"
+    "@uifabric/merge-styles" "^7.14.0"
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/styling" "^7.12.12"
+    "@uifabric/utilities" "^7.20.0"
+    tslib "^1.10.0"
 
-"@uifabric/foundation@^0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@uifabric/foundation/-/foundation-0.7.4.tgz#365305990c8c8549f98eac3dd24ffc736111ae8a"
-  integrity sha512-hE7JiCvZuG0O7HOmeC3lIX9+KAXxnt9JTgQJw/MD/unnzSm0l/WqXb6bpCuYRVZuSvgEp9DcP/yn3iphJlRh5w==
+"@uifabric/icons@^7.3.45":
+  version "7.3.45"
+  resolved "https://registry.npm.taobao.org/@uifabric/icons/download/@uifabric/icons-7.3.45.tgz#a136b2162badc3ec9a14402e48d17cb2639b9ce4"
+  integrity sha1-oTayFiutw+yaFEAuSNF8smObnOQ=
   dependencies:
-    "@uifabric/set-version" "^1.1.3"
-    "@uifabric/styling" "^6.45.2"
-    "@uifabric/utilities" "^6.35.3"
-    tslib "^1.7.1"
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/styling" "^7.12.12"
+    tslib "^1.10.0"
 
-"@uifabric/icons@^6.5.1":
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/@uifabric/icons/-/icons-6.5.1.tgz#c71305d9a2bf106b59476b0275936cc4be9d5b34"
-  integrity sha512-d4JPubp1YDBUHq3fhm6X8aXFunIqQO/iURZFAVIkzPWQGsy+MG4FVr1xZTSjvn2QlV5uq50mpY8TtzwNKJRIIQ==
+"@uifabric/merge-styles@^7.14.0":
+  version "7.14.0"
+  resolved "https://registry.npm.taobao.org/@uifabric/merge-styles/download/@uifabric/merge-styles-7.14.0.tgz#309c1d67ffba5824060544d2d6dd122258ff9c02"
+  integrity sha1-MJwdZ/+6WCQGBUTS1t0SIlj/nAI=
   dependencies:
-    "@uifabric/set-version" "^1.1.3"
-    "@uifabric/styling" "^6.45.2"
-    tslib "^1.7.1"
+    "@uifabric/set-version" "^7.0.12"
+    tslib "^1.10.0"
 
-"@uifabric/merge-styles@^6.17.0":
-  version "6.17.0"
-  resolved "https://registry.yarnpkg.com/@uifabric/merge-styles/-/merge-styles-6.17.0.tgz#5133b8108662824fbd5b39497991c149038396f6"
-  integrity sha512-yTIjOhskNzhstiqpMhM/HI5yUBCNbWOF/8+WDfGLIe4rusxxjVyC6lpBV+B2Iw20ridDFdIhs/YjKy19/ifTgQ==
+"@uifabric/react-hooks@^7.4.2":
+  version "7.4.2"
+  resolved "https://registry.npm.taobao.org/@uifabric/react-hooks/download/@uifabric/react-hooks-7.4.2.tgz#8784efe70ed30909c3ec54dad5419f30d0c41913"
+  integrity sha1-h4Tv5w7TCQnD7FTa1UGfMNDEGRM=
   dependencies:
-    "@uifabric/set-version" "^1.1.3"
-    tslib "^1.7.1"
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/utilities" "^7.20.0"
+    tslib "^1.10.0"
 
-"@uifabric/set-version@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@uifabric/set-version/-/set-version-1.1.3.tgz#8d1137df1406f38828e597e81122077a16c8da8b"
-  integrity sha512-IYpwVIuN7MJOeiWzZzr9AmFSvA5zc6gJn4fNHtEFIQnNB8WVWIcYrvx8Tbf7wWj9MvhdHYp70F054zZlHbL/Ag==
+"@uifabric/set-version@^7.0.12":
+  version "7.0.12"
+  resolved "https://registry.npm.taobao.org/@uifabric/set-version/download/@uifabric/set-version-7.0.12.tgz#542c261fd5d675cff84290ee5c1327c9d4855e7a"
+  integrity sha1-VCwmH9XWdc/4QpDuXBMnydSFXno=
   dependencies:
-    tslib "^1.7.1"
+    tslib "^1.10.0"
 
-"@uifabric/styling@^6.45.2", "@uifabric/styling@^6.47.0":
-  version "6.47.0"
-  resolved "https://registry.yarnpkg.com/@uifabric/styling/-/styling-6.47.0.tgz#53ecd693e63caf067363fd71ed5039e8b39a8616"
-  integrity sha512-iI0rqq1pfjjwHTjNRO3CFOQjYDuUixsJjZTWK1uyuWUMP4RGs227p9Bj6V6rwwjVtKWNFEM35IomXH6IZkm2rw==
+"@uifabric/styling@^7.12.12":
+  version "7.12.12"
+  resolved "https://registry.npm.taobao.org/@uifabric/styling/download/@uifabric/styling-7.12.12.tgz#017ef59cc13544f338a677e5392400be575d6062"
+  integrity sha1-AX71nME1RPM4pnflOSQAvlddYGI=
   dependencies:
-    "@microsoft/load-themed-styles" "^1.7.13"
-    "@uifabric/merge-styles" "^6.17.0"
-    "@uifabric/set-version" "^1.1.3"
-    "@uifabric/utilities" "^6.37.1"
-    tslib "^1.7.1"
+    "@microsoft/load-themed-styles" "^1.10.26"
+    "@uifabric/merge-styles" "^7.14.0"
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/utilities" "^7.20.0"
+    tslib "^1.10.0"
 
-"@uifabric/utilities@^6.35.3", "@uifabric/utilities@^6.37.1":
-  version "6.37.1"
-  resolved "https://registry.yarnpkg.com/@uifabric/utilities/-/utilities-6.37.1.tgz#53376f940a8f13bace26421c3c220ab0434759c7"
-  integrity sha512-geYwxc1bNbfPP1SaO4ICLLPBY6mXao8WvsGHMGFiJQNYF+bao09d4TrOeUVq5Dte+ejM2P9zgRw6FREQkAjkjw==
+"@uifabric/utilities@^7.20.0":
+  version "7.20.0"
+  resolved "https://registry.npm.taobao.org/@uifabric/utilities/download/@uifabric/utilities-7.20.0.tgz#ccfd2c0ba5ac33090f86a8c79d4d6140a4c842da"
+  integrity sha1-zP0sC6WsMwkPhqjHnU1hQKTIQto=
   dependencies:
-    "@uifabric/merge-styles" "^6.17.0"
-    "@uifabric/set-version" "^1.1.3"
-    prop-types "^15.5.10"
-    tslib "^1.7.1"
-
-"@uifabric/variants@^6.14.1":
-  version "6.14.1"
-  resolved "https://registry.yarnpkg.com/@uifabric/variants/-/variants-6.14.1.tgz#1b3093e2eeeef95b8324a581ee6a98fc7affc9c9"
-  integrity sha512-BrqVwd7FWdCFlGqN/2CpACkRU1aet6Vw+4zSXqDVoYUOGyDfZNU2kcP+hE/NJwWBn2S6V0fYauMp+S72E/OgwA==
-  dependencies:
-    "@uifabric/set-version" "^1.1.3"
-    office-ui-fabric-react "^6.164.1"
-    tslib "^1.7.1"
+    "@uifabric/merge-styles" "^7.14.0"
+    "@uifabric/set-version" "^7.0.12"
+    prop-types "^15.7.2"
+    tslib "^1.10.0"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -3044,6 +3114,14 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+create-react-context@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/create-react-context/download/create-react-context-0.3.0.tgz#546dede9dc422def0d3fc2fe03afe0bc0f4f7d8c"
+  integrity sha1-VG3t6dxCLe8NP8L+A6/gvA9PfYw=
+  dependencies:
+    gud "^1.0.0"
+    warning "^4.0.3"
+
 cross-spawn@6.0.5, cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -3286,6 +3364,13 @@ csstype@^2.2.0:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.4.tgz#d585a6062096e324e7187f80e04f92bd0f00e37f"
   integrity sha512-lAJUJP3M6HxFXbqtGRc0iZrdyeN+WzOWeY0q/VnFzI+kqVrYIzC7bWlKqCW7oCIdzoPkvfp82EVvrTlQ8zsWQg==
+
+customize-cra@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.npm.taobao.org/customize-cra/download/customize-cra-0.9.1.tgz#76b42c4f537c16329eccc09cfefd804d04c81550"
+  integrity sha1-drQsT1N8FjKezMCc/v2ATQTIFVA=
+  dependencies:
+    lodash.flow "^3.5.0"
 
 cyclist@~0.2.2:
   version "0.2.2"
@@ -3788,6 +3873,13 @@ escodegen@^1.11.0, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-config-prettier@^6.7.0:
+  version "6.11.0"
+  resolved "https://registry.npm.taobao.org/eslint-config-prettier/download/eslint-config-prettier-6.11.0.tgz#f6d2238c1290d01c859a8b5c1f7d352a0b0da8b1"
+  integrity sha1-9tIjjBKQ0ByFmotcH301KgsNqLE=
+  dependencies:
+    get-stdin "^6.0.0"
+
 eslint-config-react-app@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-4.0.0.tgz#1651f44b3830d863817af6ebed0916193aa870c3"
@@ -3858,6 +3950,13 @@ eslint-plugin-jsx-a11y@6.2.1:
     emoji-regex "^7.0.2"
     has "^1.0.3"
     jsx-ast-utils "^2.0.1"
+
+eslint-plugin-prettier@^3.1.2:
+  version "3.1.3"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-prettier/download/eslint-plugin-prettier-3.1.3.tgz?cache=0&sync_timestamp=1586740954999&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-prettier%2Fdownload%2Feslint-plugin-prettier-3.1.3.tgz#ae116a0fc0e598fdae48743a4430903de5b4e6ca"
+  integrity sha1-rhFqD8DlmP2uSHQ6RDCQPeW05so=
+  dependencies:
+    prettier-linter-helpers "^1.0.0"
 
 eslint-plugin-react-hooks@^1.5.0:
   version "1.6.0"
@@ -4185,6 +4284,11 @@ fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
+
+fast-diff@^1.1.2:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/fast-diff/download/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
+  integrity sha1-c+4RmC2Gyq95WYKNUZz+kn+sXwM=
 
 fast-glob@^2.0.2:
   version "2.2.6"
@@ -4546,6 +4650,11 @@ get-own-enumerable-property-symbols@^3.0.0:
   resolved "https://registry.yarnpkg.com/get-own-enumerable-property-symbols/-/get-own-enumerable-property-symbols-3.0.0.tgz#b877b49a5c16aefac3655f2ed2ea5b684df8d203"
   integrity sha512-CIJYJC4GGF06TakLg8z4GQKvDsx9EMspVxOYih7LerEL/WosUnFIww45CGfxfeKHqlg3twgUrYRT1O3WQqjGCg==
 
+get-stdin@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npm.taobao.org/get-stdin/download/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
+  integrity sha1-ngm/cSs2CrkiXoEgSPcf3pyJZXs=
+
 get-stream@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
@@ -4654,6 +4763,11 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
+
+gud@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/gud/download/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
+  integrity sha1-pIlYGxfmpwvsqavjrlfeekmYUsA=
 
 gzip-size@5.0.0:
   version "5.0.0"
@@ -5140,7 +5254,7 @@ internal-ip@^4.2.0:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
 
-invariant@^2.2.2, invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.3, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -6296,6 +6410,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.flow@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.npm.taobao.org/lodash.flow/download/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
+  integrity sha1-h79AKSuM+D5OjOGjrkIJ4gBxZ1o=
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -7024,20 +7143,23 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
-office-ui-fabric-react@^6.164.1, office-ui-fabric-react@^6.174.0:
-  version "6.174.0"
-  resolved "https://registry.yarnpkg.com/office-ui-fabric-react/-/office-ui-fabric-react-6.174.0.tgz#105ab2801ef2abd7238d7c2d0f1c593a103cb37f"
-  integrity sha512-AsdICm7y26OyZNnzGEtq6gCOG4c1hBeP9PlpaG6L7i3ovN09C+ZQsKPSwWdiFD5JryWbeG+FhnlcMtNVSveBmQ==
+office-ui-fabric-react@^7.115.4:
+  version "7.115.4"
+  resolved "https://registry.npm.taobao.org/office-ui-fabric-react/download/office-ui-fabric-react-7.115.4.tgz#618ba876c3c7ec66f27737cc86320fa87a193d2a"
+  integrity sha1-YYuodsPH7GbydzfMhjIPqHoZPSo=
   dependencies:
-    "@microsoft/load-themed-styles" "^1.7.13"
-    "@uifabric/foundation" "^0.7.4"
-    "@uifabric/icons" "^6.5.1"
-    "@uifabric/merge-styles" "^6.17.0"
-    "@uifabric/set-version" "^1.1.3"
-    "@uifabric/styling" "^6.47.0"
-    "@uifabric/utilities" "^6.37.1"
-    prop-types "^15.5.10"
-    tslib "^1.7.1"
+    "@fluentui/react-focus" "^7.12.2"
+    "@fluentui/react-icons" "^0.1.21"
+    "@microsoft/load-themed-styles" "^1.10.26"
+    "@uifabric/foundation" "^7.7.19"
+    "@uifabric/icons" "^7.3.45"
+    "@uifabric/merge-styles" "^7.14.0"
+    "@uifabric/react-hooks" "^7.4.2"
+    "@uifabric/set-version" "^7.0.12"
+    "@uifabric/styling" "^7.12.12"
+    "@uifabric/utilities" "^7.20.0"
+    prop-types "^15.7.2"
+    tslib "^1.10.0"
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -8126,6 +8248,18 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
+prettier-linter-helpers@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/prettier-linter-helpers/download/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
+  integrity sha1-0j1B/hN1ZG3i0BBNNFSjAIgCz3s=
+  dependencies:
+    fast-diff "^1.1.2"
+
+prettier@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.npm.taobao.org/prettier/download/prettier-2.0.5.tgz?cache=0&sync_timestamp=1587488858835&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprettier%2Fdownload%2Fprettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
+  integrity sha1-1tVigkVSQ/L5LMFxZpLAiqMVItQ=
+
 pretty-bytes@^5.1.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.2.0.tgz#96c92c6e95a0b35059253fb33c03e260d40f5a1f"
@@ -8189,10 +8323,10 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.5.10:
+prop-types@^15.6.1, prop-types@^15.7.2:
   version "15.7.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
-  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+  resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
   dependencies:
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
@@ -8377,6 +8511,13 @@ react-app-polyfill@^1.0.0:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
+react-app-rewired@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.npm.taobao.org/react-app-rewired/download/react-app-rewired-2.1.6.tgz#33ee3076a7f34d6a7c94e649cac67e7c8c580de8"
+  integrity sha1-M+4wdqfzTWp8lOZJysZ+fIxYDeg=
+  dependencies:
+    semver "^5.6.0"
+
 react-dev-utils@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.0.tgz#356d95db442441c5d4748e0e49f4fd1e71aecbbd"
@@ -8423,10 +8564,25 @@ react-error-overlay@^5.1.5:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.5.tgz#884530fd055476c764eaa8ab13b8ecf1f57bbf2c"
   integrity sha512-O9JRum1Zq/qCPFH5qVEvDDrVun8Jv9vbHtZXCR1EuRj9sKg1xJTlHxBzU6AkCzpvxRLuiY4OKImy3cDLQ+UTdg==
 
-react-is@^16.8.1, react-is@^16.8.4:
+react-hook-form@^5.7.2:
+  version "5.7.2"
+  resolved "https://registry.npm.taobao.org/react-hook-form/download/react-hook-form-5.7.2.tgz#a84e259e5d37dd30949af4f79c4dac31101b79ac"
+  integrity sha1-qE4lnl033TCUmvT3nE2sMRAbeaw=
+
+react-is@^16.8.1:
+  version "16.13.1"
+  resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
+  integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
+
+react-is@^16.8.4:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
+
+react-lifecycles-compat@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
 react-scripts@3.0.0:
   version "3.0.0"
@@ -9799,7 +9955,12 @@ ts-pnp@^1.0.0:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.2.tgz#be8e4bfce5d00f0f58e0666a82260c34a57af552"
   integrity sha512-f5Knjh7XCyRIzoC/z1Su1yLLRrPrFCgtUAh/9fCSP6NKbATwpOL1+idQVXQokK9GRFURn/jYPGPfegIctwunoA==
 
-tslib@^1.7.1, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.10.0:
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
+  integrity sha1-yIHhPMcBWJTtkUhi0nZDb6mkcEM=
+
+tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
@@ -9848,10 +10009,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.4.5:
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
-  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
+typescript@^4.0.0-dev.20200526:
+  version "4.0.0-dev.20200526"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-4.0.0-dev.20200526.tgz?cache=0&sync_timestamp=1590477972819&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-4.0.0-dev.20200526.tgz#6904449ecf49f7f3ce352400e8a9114976ec8745"
+  integrity sha1-aQREns9J9/PONSQA6KkRSXbsh0U=
 
 uglify-js@3.4.x, uglify-js@^3.1.4:
   version "3.4.9"
@@ -10153,6 +10314,13 @@ walker@^1.0.7, walker@~1.0.5:
   integrity sha1-L3+bj9ENZ3JisYqITijRlhjgKPs=
   dependencies:
     makeerror "1.0.x"
+
+warning@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npm.taobao.org/warning/download/warning-4.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwarning%2Fdownload%2Fwarning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+  integrity sha1-Fungd+uKhtavfWSqHgX9hbRnjKM=
+  dependencies:
+    loose-envify "^1.0.0"
 
 watchpack@^1.5.0:
   version "1.6.0"
