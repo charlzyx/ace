@@ -20,7 +20,7 @@ const up = (updater: React.Dispatch<React.SetStateAction<Menu[]>>) => {
     });
     const list: Menu[] = tags.list().map((x) => {
       return {
-        key: x.id.toString(),
+        key: x.id.toString() + x.space_id + x.id,
         name: `🚀____${x.alias}`,
         url: `/ace/group/${x.space_id}/${x.id}`,
       };
