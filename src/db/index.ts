@@ -1,8 +1,15 @@
 export enum TABLE {
-  SPACE,
-  TYPE,
-  GROUP,
-  GROUPXGROUP,
+  SPACE = 'SPACE',
+  TAG = 'TAG',
+  GROUP = 'GROUP',
+  GROUPXGROUP = 'GROUPXGROUP',
+}
+
+export enum TYPE {
+  USER = 'USER',
+  ROLE = 'ROLE',
+  DATA = 'DATA',
+  RESOURCE = 'RESOURCE',
 }
 
 const storage = window.localStorage;

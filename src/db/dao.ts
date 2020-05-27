@@ -1,16 +1,16 @@
 // [
 //   Space[
 //     Group(
-//       Type
+//       Tag
 //     )
 //   ]
 // ]
 
 // Space
 // Space X Group
-// Group X Type
+// Group X Tag
 
-import db, { TABLE } from './index';
+import db, { TABLE, TYPE } from './index';
 const max = (table: TABLE) => {
   return Math.max(
     0,
@@ -25,11 +25,12 @@ export class Space {
   alias = '';
 }
 
-export class Type {
-  static id = max(TABLE.TYPE);
-  id = Type.id;
+export class Tag {
+  static id = max(TABLE.TAG);
+  id = Tag.id;
   alias = '';
   space_id = 0;
+  type: TYPE = TYPE.USER;
   space_alias = '';
 }
 
@@ -39,9 +40,10 @@ export class Group {
   alias = '';
   path = '';
   is_root = false;
-  type_id = -1;
-  type_alias = '';
-  space_id = -1;
+  type: TYPE = TYPE.USER;
+  tag_id = 0;
+  tag_alias = '';
+  space_id = 0;
   space_alias = '';
   children: Group[] = [];
 }
@@ -49,15 +51,15 @@ export class Group {
 export class GroupXGroup {
   static id = max(TABLE.GROUPXGROUP);
   id = GroupXGroup.id;
-  group_id = -1;
+  group_id = 0;
   group_alias = '';
-  link_group_id = -1;
+  link_group_id = 0;
   link_group_alias = '';
 }
 
 const DAO = {
   Space,
-  Type,
+  Tag,
   Group,
   GroupXGroup,
 };

@@ -1,20 +1,22 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Button, Form, Input, Table } from 'antd';
+import { Button, Form, Input, Radio, Table } from 'antd';
 import { Link, RouteComponentProps, useParams } from '@reach/router';
-import * as Api from '../server/type';
-import { Type } from '../server/vo';
+import * as Api from '../server/tag';
+import { Tag } from '../server/vo';
+import { TYPE } from '../db';
 
 const { Item } = Form;
+const { Group: RadioGroup } = Radio;
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
 const List: FC<RouteComponentProps> = () => {
-  const [list, setList] = useState<Type[]>([]);
+  const [list, setList] = useState<Tag[]>([]);
   const params = useParams();
   const [form] = Form.useForm();
   const trigger = useCallback(() => {
-    setList(Api.list(+params.space_id));
+    setList(Api.list({ space_id: +params.space_id }));
   }, [params.space_id]);
   useEffect(() => {
     trigger();
@@ -22,10 +24,11 @@ const List: FC<RouteComponentProps> = () => {
   const toSubmit = useCallback(
     (values) => {
       console.log('values', values);
+      values.space_id = +params.space_id;
       if (values.id) {
-        Api.update({ id: values.id }, values);
+        Api.update(values);
       } else {
-        Api.add(+params.space_id, values.alias);
+        Api.add(values);
       }
       trigger();
     },
@@ -38,7 +41,7 @@ const List: FC<RouteComponentProps> = () => {
           <Button
             type="primary"
             onClick={() => {
-              form.setFieldsValue({ alias: '', id: -1 });
+              form.setFieldsValue({ alias: '' });
             }}
           >
             新增
@@ -49,6 +52,7 @@ const List: FC<RouteComponentProps> = () => {
           columns={[
             { key: 'id', dataIndex: 'id', title: 'ID' },
             { key: 'alias', dataIndex: 'alias', title: 'ALIAS' },
+            { key: 'type', dataIndex: 'type', title: 'TYPE' },
             {
               key: 'space_alias',
               dataIndex: 'space_alias',
@@ -87,13 +91,35 @@ const List: FC<RouteComponentProps> = () => {
         ></Table>
       </div>
       <div style={{ flex: 1 }}>
-        <h1>编辑区</h1>
+        <h3>编辑区</h3>
         <Form {...layout} form={form} onFinish={toSubmit}>
           <Item name="id" label="ID" required>
             <Input disabled></Input>
           </Item>
           <Item name="alias" label="ALIAS" required>
             <Input></Input>
+          </Item>
+          <Item name="type" label="TYPE" required>
+            <RadioGroup
+              options={[
+                {
+                  label: TYPE.USER,
+                  value: TYPE.USER,
+                },
+                {
+                  label: TYPE.ROLE,
+                  value: TYPE.ROLE,
+                },
+                {
+                  label: TYPE.DATA,
+                  value: TYPE.DATA,
+                },
+                {
+                  label: TYPE.RESOURCE,
+                  value: TYPE.RESOURCE,
+                },
+              ]}
+            ></RadioGroup>
           </Item>
           <Button type="primary" htmlType="submit">
             保存

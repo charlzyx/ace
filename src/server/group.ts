@@ -1,24 +1,19 @@
-import { Group, GroupXGroup, Space, Type } from '../db/dao';
+import { Group, GroupXGroup, Space, Tag } from '../db/dao';
 import database from '../db';
+import { matcher } from '../utils';
 
 const db = database<Group>(database.TABLE.GROUP);
 const dbx = database<GroupXGroup>(database.TABLE.GROUPXGROUP);
-const dbtype = database<Type>(database.TABLE.TYPE);
+const dbtype = database<Tag>(database.TABLE.TAG);
 const dbspace = database<Space>(database.TABLE.SPACE);
 export type LinkedGroup = Group & {
   children: LinkedGroup[];
   links: {
-    [type_alias: string]: {
+    [tag_alias: string]: {
       id: Group['id'];
       alias: Group['alias'];
     }[];
   };
-};
-
-type TQuery = {
-  id?: number;
-  type_id?: number;
-  alias?: string;
 };
 
 const fillGroupLinks = (group: Group) => {
@@ -28,14 +23,14 @@ const fillGroupLinks = (group: Group) => {
     .list((x) => x.group_id === group.id)
     .map((g) => db.query((gg) => gg.id === g.link_group_id))
     .reduce((o, linked) => {
-      const has = o[linked!.type_alias];
+      const has = o[linked!.tag_alias];
       if (has) {
         has.push({
           id: linked!.id,
           alias: linked!.alias,
         });
       } else {
-        o[linked!.type_alias] = [
+        o[linked!.tag_alias] = [
           {
             id: linked!.id,
             alias: linked!.alias,
@@ -48,7 +43,7 @@ const fillGroupLinks = (group: Group) => {
 };
 const fillGroupAlias = (group: Group) => {
   group.space_alias = dbspace.query((x) => x.id === group.space_id)!.alias;
-  group.type_alias = dbtype.query((x) => x.id === group.type_id)!.alias;
+  group.tag_alias = dbtype.query((x) => x.id === group.tag_id)!.alias;
 };
 
 const fillGroupChildren = (group: Group) => {
@@ -68,46 +63,46 @@ const fillGroupChildren = (group: Group) => {
   }
 };
 
-const query = (req: TQuery) => {
-  if (!req.id && !req.alias) return null;
-  const group = db.query((x) => {
-    if (req.id) return x.id === req.id;
-    if (req.alias) return x.alias === req.alias;
-    return false;
+const query = (group: Partial<Group>) => {
+  console.log('group', group);
+  const g = db.query((x) => matcher(group, x, false));
+  if (!g) return null;
+  fillGroupAlias(g);
+  fillGroupLinks(g);
+  fillGroupChildren(g);
+  return g;
+};
+
+const list = (group: Partial<Group>) => {
+  console.log('group', group);
+  const items = db.list((x) => matcher(group, x, false));
+  return items.map((g) => {
+    fillGroupAlias(g);
+    fillGroupLinks(g);
+    fillGroupChildren(g);
+    return g;
   });
-  if (!group) return null;
-  fillGroupAlias(group);
-  fillGroupLinks(group);
-  fillGroupChildren(group);
 };
 
-const root = (req: { type_id: number; space_id: number; kw?: string }) => {
-  return db
-    .list((x) => {
-      const isSpace = req.space_id === x.space_id;
-      if (!isSpace) return false;
-      const isType = req.type_id === x.type_id;
-      if (!isType) return false;
-      const isRoot = x.is_root;
-      if (!isRoot) return false;
-      const isMatch = req.kw ? x.alias.indexOf(req.kw) > -1 : true;
-      return isMatch;
-    })
-    .map((g) => {
-      fillGroupAlias(g);
-      fillGroupLinks(g);
-      fillGroupChildren(g);
-      return g;
-    }) as LinkedGroup[];
-};
-
-const add = (req: { group: Partial<Group>; parentPath?: string }) => {
-  const row = { ...new Group(), ...req.group };
+const add = (
+  group: Omit<Group, 'id'>,
+  parent: {
+    path?: Group['path'];
+    space_id: Group['space_id'];
+    space_alias: Group['space_alias'];
+    tag_id: Group['tag_id'];
+    tag_alias: Group['tag_alias'];
+    type: Group['type'];
+  },
+) => {
+  const row = { ...new Group(), ...group };
   row.id = ++Group.id;
-  row.is_root = !req.parentPath;
-  row.path = req.parentPath ? `${req.parentPath}${row.id}#` : `ROOT${row.id}#`;
-  row.space_alias = dbspace.query((x) => x.id === req.group.space_id)!.alias;
-  row.type_alias = dbtype.query((x) => x.id === req.group.type_id)!.alias;
+  row.path = parent.path ? `${parent.path}${row.id}#` : `ROOT${row.id}#`;
+  row.space_id = parent.space_id;
+  row.space_alias = parent.space_alias;
+  row.tag_id = parent.tag_id;
+  row.tag_alias = parent.tag_alias;
+  row.type = parent.type;
   db.add(row);
   return row.id;
 };
@@ -135,36 +130,32 @@ const link = (req: { links: number[]; group_id: number }) => {
   });
 };
 
-const del = (req: TQuery) => {
-  const toDel = db.query((x) => {
-    if (req.id) return x.id === req.id;
-    if (req.type_id) return x.type_id === req.id;
-    if (req.alias) return x.alias === req.alias;
-    return false;
-  });
-  // 事务
+const del = (group: Partial<Group>) => {
+  const d = db.query((x) => matcher(group, x, false));
 
-  if (!toDel) return;
+  // 事务??
+
+  if (!d) return;
   // 删除关联表
-  db.list((x) => x.path.startsWith(toDel.path)).forEach((son) => {
+  db.list((x) => x.path.startsWith(d.path)).forEach((son) => {
     dbx.del((x) => x.group_id === son.id || x.link_group_id === son.id);
   });
   // 删除本体
-  const ret = db.del((x) => !x.is_root && x.path.startsWith(toDel.path));
+  const ret = db.del((x) => !x.is_root && x.path.startsWith(d.path));
   return ret;
 };
 
-const update = (req: TQuery, neo: Group) => {
+const update = (group: Partial<Group>) => {
+  const match: typeof group = {};
+  if (group.id) match.id = group.id;
+  if (group.tag_id) match.tag_id = group.tag_id;
+  if (group.space_id) match.space_id = group.space_id;
   return db.update(
-    (x) => {
-      if (req.alias) return x.alias === req.alias;
-      if (req.id) return x.id === req.id;
-      return false;
-    },
+    (x) => matcher(match, x, false),
     (old) => {
-      return { ...old, ...neo };
+      return { ...old, ...group };
     },
   );
 };
 
-export { add, link, del, update, query, root };
+export { add, link, del, update, query, list };

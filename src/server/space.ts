@@ -1,51 +1,33 @@
 import { Space } from '../db/dao';
 import database from '../db';
+import { matcher } from '../utils';
 
 const db = database<Space>(database.TABLE.SPACE);
 
-type TQuery = { id?: number; alias?: string };
-const query = (req: TQuery) => {
-  if (!req.id && !req.alias) return null;
-  return db.query((x) => {
-    if (req.id) return x.id === req.id;
-    if (req.alias) return x.alias === req.alias;
-    return false;
-  });
-};
-const list = (kw?: string) => {
-  return db.list((x) => {
-    if (kw) {
-      return x.alias.indexOf(kw) > -1;
-    }
-    return true;
-  });
+const query = (space: Partial<Space>) => {
+  return db.query((x) => matcher(space, x, false));
 };
 
-const add = (alias: string) => {
-  const row = new Space();
-  row.alias = alias;
+const list = (space?: Partial<Space>) => {
+  return db.list((x) => matcher(space, x, true));
+};
+
+const add = (space: Omit<Space, 'id'>) => {
+  const row = { ...new Space(), ...space };
   row.id = ++Space.id;
   db.add(row);
   return row.id;
 };
 
-const del = (req: TQuery) => {
-  return db.del((x) => {
-    if (req.id) return x.id === req.id;
-    if (req.alias) return x.alias === req.alias;
-    return false;
-  });
+const del = (space: Partial<Space>) => {
+  return db.del((x) => matcher(space, x, false));
 };
 
-const update = (req: TQuery, neo: Space) => {
+const update = (space: Partial<Space>) => {
   return db.update(
-    (x) => {
-      if (req.alias) return x.alias === req.alias;
-      if (req.id) return x.id === req.id;
-      return false;
-    },
+    (x) => matcher({ id: space.id }, x, false),
     (old) => {
-      return { ...old, ...neo };
+      return { ...old, ...space };
     },
   );
 };

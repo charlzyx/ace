@@ -2,7 +2,7 @@ import React from 'react';
 import Nav from './Nav';
 import { RouteComponentProps, Router } from '@reach/router';
 import Space from './Space';
-import Type from './Type';
+import Tag from './Tag';
 import Group from './Group';
 
 let Home = (props: RouteComponentProps) => <div>Home</div>;
@@ -32,8 +32,8 @@ export const App: React.FunctionComponent = () => {
           <Router>
             <Home path="/"></Home>
             <Space path="/space"></Space>
-            <Type path="/type/:space_id"></Type>
-            <Group path="/group/:space_id/:type_id"></Group>
+            <Tag path="/tag/:space_id"></Tag>
+            <Group path="/group/:space_id/:tag_id"></Group>
           </Router>
         </div>
       </div>

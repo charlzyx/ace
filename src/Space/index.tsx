@@ -22,9 +22,9 @@ const List: FC<RouteComponentProps> = () => {
     (values) => {
       console.log('values', values);
       if (values.id) {
-        Api.update({ id: values.id }, values);
+        Api.update(values);
       } else {
-        Api.add(values.alias);
+        Api.add(values);
       }
       trigger();
     },
@@ -37,7 +37,7 @@ const List: FC<RouteComponentProps> = () => {
           <Button
             type="primary"
             onClick={() => {
-              form.setFieldsValue({ alias: '', id: -1 });
+              form.setFieldsValue({ alias: '', id: '' });
             }}
           >
             新增
@@ -70,8 +70,8 @@ const List: FC<RouteComponentProps> = () => {
                     >
                       修改
                     </Button>
-                    <Link to={`/type/${row.id}`}>
-                      <Button>编辑TYPE</Button>
+                    <Link to={`/tag/${row.id}`}>
+                      <Button>编辑TAG</Button>
                     </Link>
                   </div>
                 );
@@ -81,7 +81,7 @@ const List: FC<RouteComponentProps> = () => {
         ></Table>
       </div>
       <div style={{ flex: 1 }}>
-        <h1>编辑区</h1>
+        <h3>编辑区</h3>
         <Form {...layout} form={form} onFinish={toSubmit}>
           <Item name="id" label="ID" required>
             <Input disabled></Input>
