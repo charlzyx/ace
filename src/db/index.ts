@@ -1,6 +1,8 @@
 export enum TABLE {
   SPACE,
+  TYPE,
   GROUP,
+  GROUPXGROUP,
 }
 
 const storage = window.localStorage;
@@ -27,20 +29,20 @@ const table = (name: TABLE) => {
   return proxy;
 };
 
-type IndexDesc<T> = (row: T) => boolean;
-type UpdateDesc<T> = (row: T) => T;
+type Selector<T> = (row: T) => boolean;
+type Updater<T> = (row: T) => T;
 
-const list = <T>(name: TABLE, by: IndexDesc<T>) => {
+const list = <T>(name: TABLE, by: Selector<T>) => {
   const t = table(name);
   return t.filter(by) as T[];
 };
 
-const query = <T>(name: TABLE, by: IndexDesc<T>) => {
+const query = <T>(name: TABLE, by: Selector<T>) => {
   const t = table(name);
   return t.find(by) as T | undefined;
 };
 
-const update = <T>(name: TABLE, at: IndexDesc<T>, updater: UpdateDesc<T>) => {
+const update = <T>(name: TABLE, at: Selector<T>, updater: Updater<T>) => {
   const t = table(name);
   const idx = t.findIndex(at);
   if (idx > -1) {
@@ -50,7 +52,7 @@ const update = <T>(name: TABLE, at: IndexDesc<T>, updater: UpdateDesc<T>) => {
   return false;
 };
 
-const del = <T>(name: TABLE, at: IndexDesc<T>) => {
+const del = <T>(name: TABLE, at: Selector<T>) => {
   const t = table(name);
   const idx = t.findIndex(at);
   if (idx > -1) {
@@ -69,11 +71,10 @@ const add = <T>(name: TABLE, row: T) => {
 const db = <T>(name: TABLE) => {
   return {
     add: (row: T) => add(name, row),
-    del: (at: IndexDesc<T>) => del(name, at),
-    update: (at: IndexDesc<T>, updater: UpdateDesc<T>) =>
-      update(name, at, updater),
-    query: (by: IndexDesc<T>) => query(name, by),
-    list: (by: IndexDesc<T>) => list(name, by),
+    del: (at: Selector<T>) => del(name, at),
+    update: (at: Selector<T>, updater: Updater<T>) => update(name, at, updater),
+    query: (by: Selector<T>) => query(name, by),
+    list: (by: Selector<T>) => list(name, by),
   };
 };
 db.TABLE = TABLE;

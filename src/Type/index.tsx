@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input, Table } from 'antd';
-import { Link, RouteComponentProps } from '@reach/router';
-import * as Api from '../server/space';
-import { Space } from '../server/vo';
+import { Link, RouteComponentProps, useParams } from '@reach/router';
+import * as Api from '../server/type';
+import { Type } from '../server/vo';
 
 const { Item } = Form;
 const layout = {
@@ -10,11 +10,12 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const List: FC<RouteComponentProps> = () => {
-  const [list, setList] = useState<Space[]>([]);
+  const [list, setList] = useState<Type[]>([]);
+  const params = useParams();
   const [form] = Form.useForm();
   const trigger = useCallback(() => {
-    setList(Api.list());
-  }, []);
+    setList(Api.list(+params.space_id));
+  }, [params.space_id]);
   useEffect(() => {
     trigger();
   }, [trigger]);
@@ -24,11 +25,11 @@ const List: FC<RouteComponentProps> = () => {
       if (values.id) {
         Api.update({ id: values.id }, values);
       } else {
-        Api.add(values.alias);
+        Api.add(+params.space_id, values.alias);
       }
       trigger();
     },
-    [trigger],
+    [params.space_id, trigger],
   );
   return (
     <div style={{ display: 'flex' }}>
@@ -48,6 +49,11 @@ const List: FC<RouteComponentProps> = () => {
           columns={[
             { key: 'id', dataIndex: 'id', title: 'ID' },
             { key: 'alias', dataIndex: 'alias', title: 'ALIAS' },
+            {
+              key: 'space_alias',
+              dataIndex: 'space_alias',
+              title: 'SPACE_ALIAS',
+            },
             {
               key: '__op__',
               render(row) {
@@ -70,8 +76,8 @@ const List: FC<RouteComponentProps> = () => {
                     >
                       修改
                     </Button>
-                    <Link to={`/type/${row.id}`}>
-                      <Button>编辑TYPE</Button>
+                    <Link to={`/group/${params.space_id}/${row.id}`}>
+                      <Button>编辑GROUP</Button>
                     </Link>
                   </div>
                 );

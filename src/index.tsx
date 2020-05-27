@@ -1,20 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
-import { initializeIcons, mergeStyles } from '@fluentui/react';
 import * as serviceWorker from './serviceWorker';
-
-initializeIcons();
-// Inject some global styles
-mergeStyles({
-  selectors: {
-    ':global(body), :global(html), :global(#root)': {
-      margin: 0,
-      padding: 0,
-      height: '100vh',
-    },
-  },
-});
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
