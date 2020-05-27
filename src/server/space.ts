@@ -1,6 +1,7 @@
 import { Space } from '../db/dao';
 import database from '../db';
 import { matcher } from '../utils';
+import * as tag from './tag';
 
 const db = database<Space>(database.TABLE.SPACE);
 
@@ -24,12 +25,21 @@ const del = (space: Partial<Space>) => {
 };
 
 const update = (space: Partial<Space>) => {
-  return db.update(
+  const neo = db.update(
     (x) => matcher({ id: space.id }, x, false),
     (old) => {
       return { ...old, ...space };
     },
   );
+
+  if (neo) {
+    tag.list({ space_id: neo.id }).forEach((t) => {
+      tag.update({
+        space_id: neo.id,
+        space_alias: neo.alias,
+      });
+    });
+  }
 };
 
 export { add, del, update, query, list };

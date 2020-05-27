@@ -53,10 +53,10 @@ const update = <T>(name: TABLE, at: Selector<T>, updater: Updater<T>) => {
   const t = table(name);
   const idx = t.findIndex(at);
   if (idx > -1) {
-    t[idx] = updater(t[idx]);
-    return true;
+    const neo = updater(t[idx]);
+    t[idx] = neo;
+    return neo;
   }
-  return false;
 };
 
 const del = <T>(name: TABLE, at: Selector<T>) => {

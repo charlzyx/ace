@@ -1,8 +1,9 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Button, Col, Form, Input, Row, Tree } from 'antd';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { Button, Col, Form, Input, Row, Tree, message } from 'antd';
 import { RouteComponentProps, useParams } from '@reach/router';
 import * as Api from '../server/group';
 import { TYPE } from '../db';
+import { Group } from '../server/vo';
 import TreeSelector from '../comps/TreeSelector';
 import { transfer } from '../utils';
 
@@ -31,13 +32,16 @@ const List: FC<RouteComponentProps> = () => {
   const [dataSource, setDataSource] = useState<any>({});
   const params = useParams();
   const [form] = Form.useForm();
+
+  const parenting = useRef<Group>();
+  const [parentNow, setParentNow] = useState<Group>();
+
   const trigger = useCallback(() => {
     const root = Api.query({
       space_id: +params.space_id,
       tag_id: +params.tag_id,
       is_root: true,
     });
-    console.log('root', root);
     const transfer = (node: any) => {
       node.title = (
         <Row gutter={16}>
@@ -73,7 +77,8 @@ const List: FC<RouteComponentProps> = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 const neo: any = {};
-                neo.parentPath = node.path;
+                parenting.current = node;
+                setParentNow(node);
                 form.setFieldsValue(neo);
               }}
             >
@@ -90,9 +95,11 @@ const List: FC<RouteComponentProps> = () => {
     };
     setTree([transfer(root || {})]);
   }, [form, params.space_id, params.tag_id]);
+
   useEffect(() => {
     trigger();
   }, [trigger]);
+
   const toSubmit = useCallback(
     (values) => {
       console.log('values', values);
@@ -103,13 +110,16 @@ const List: FC<RouteComponentProps> = () => {
           tag_id: +params.tag_id,
         });
       } else {
+        if (!parenting.current) {
+          return message.error('请先选择父节点');
+        }
         Api.add(
           {
             ...values,
             space_id: +params.space_id,
             tag_id: +params.tag_id,
           },
-          values.parentPath,
+          parenting.current,
         );
       }
       trigger();
@@ -121,7 +131,7 @@ const List: FC<RouteComponentProps> = () => {
     if (!tree[0]) return;
     const types = watedTypes(tree[0].type);
     const trees = types.reduce((o: any, type) => {
-      const nodes = Api.list({ type });
+      const nodes = Api.list({ type, is_root: true });
       const tree = nodes.reduce((a: any, node) => {
         if (!node) return [];
         const t = transfer(node, [
@@ -134,16 +144,16 @@ const List: FC<RouteComponentProps> = () => {
         a[node.alias] = [t];
         return a;
       }, {});
-      console.log(`treeeeee${type}`, tree);
       o[type] = tree;
       return o;
     }, {});
     setDataSource(trees);
-    console.log('trees', trees);
   }, [tree]);
+
   useEffect(() => {
     tags();
   }, [tags]);
+
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: 1 }}>
@@ -151,11 +161,13 @@ const List: FC<RouteComponentProps> = () => {
       </div>
       <div style={{ flex: 1 }}>
         <h3>编辑区</h3>
+        <div>
+          <h4>
+            当前父节点: {parentNow?.alias} / {parentNow?.path}
+          </h4>
+        </div>
         <Form {...layout} form={form} onFinish={toSubmit}>
           <Item name="id" label="ID" required>
-            <Input disabled></Input>
-          </Item>
-          <Item name="parentPath" label="PARENT_PATH" required>
             <Input disabled></Input>
           </Item>
           <Item name="path" label="PATH" required>
@@ -166,15 +178,12 @@ const List: FC<RouteComponentProps> = () => {
           </Item>
           {Object.keys(dataSource).map((type) => {
             return (
-              <div>
+              <div key={type}>
                 <h2>{type}</h2>
                 <div>
                   {Object.keys(dataSource[type]).map((alias) => {
                     return (
-                      <Item
-                        name={`${type}.${alias}`}
-                        label={`${type}.${alias}`}
-                      >
+                      <Item key={alias} name={['links', alias]} label={alias}>
                         <TreeSelector
                           tree={dataSource[type][alias]}
                         ></TreeSelector>

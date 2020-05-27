@@ -1,6 +1,7 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Form, Input, Table } from 'antd';
 import { Link, RouteComponentProps } from '@reach/router';
+import Ctx from '../Nav/ctx';
 import * as Api from '../server/space';
 import { Space } from '../server/vo';
 
@@ -10,11 +11,14 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const List: FC<RouteComponentProps> = () => {
+  const ctx = useContext(Ctx);
   const [list, setList] = useState<Space[]>([]);
   const [form] = Form.useForm();
   const trigger = useCallback(() => {
-    setList(Api.list());
-  }, []);
+    const list = Api.list();
+    setList(list);
+    ctx.update();
+  }, [ctx]);
   useEffect(() => {
     trigger();
   }, [trigger]);
@@ -44,6 +48,7 @@ const List: FC<RouteComponentProps> = () => {
           </Button>
         </div>
         <Table
+          rowKey="id"
           dataSource={list}
           columns={[
             { key: 'id', dataIndex: 'id', title: 'ID' },
@@ -70,7 +75,7 @@ const List: FC<RouteComponentProps> = () => {
                     >
                       修改
                     </Button>
-                    <Link to={`/tag/${row.id}`}>
+                    <Link to={`/ace/tag/${row.id}`}>
                       <Button>编辑TAG</Button>
                     </Link>
                   </div>

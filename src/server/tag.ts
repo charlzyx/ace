@@ -49,14 +49,22 @@ const update = (tag: Partial<Tag>) => {
   const match: typeof tag = {};
   if (tag.id) match.id = tag.id;
   if (tag.space_id) match.space_id = tag.space_id;
-  return db.update(
+  const neo = db.update(
     (x) => matcher({ id: tag.id }, x, false),
     (old) => {
-      const neo = { ...old, ...tag };
-      group.update({ tag_id: neo.id, type: neo.type, tag_alias: neo.alias });
-      return neo;
+      return { ...old, ...tag };
     },
   );
+  if (neo) {
+    group.list({ tag_id: neo.id }).forEach((g) => {
+      group.update({
+        id: g.id,
+        tag_id: neo.id,
+        type: neo.type,
+        tag_alias: neo.alias,
+      });
+    });
+  }
 };
 
 export { add, del, update, query, list };

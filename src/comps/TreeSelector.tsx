@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Tree } from 'antd';
 
 type Props = {
@@ -20,6 +20,12 @@ const TreeSelector: FC<Props> = ({ value, onChange, tree }) => {
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
+
+  useEffect(() => {
+    if (Array.isArray(value)) {
+      setExpandedKeys(value);
+    }
+  }, [value]);
 
   const onCheck = (checkedKeys: any) => {
     console.log('onCheck', checkedKeys);

@@ -1,33 +1,39 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Link } from '@reach/router';
+import Ctx from './ctx';
 
 const menus = {
-  name: 'A SPACE ODYSSEY',
+  name: 'A SPACE ODYSSEY  🛰',
   links: [
     {
       key: 'HOME',
       name: 'HOME',
-      url: '/',
+      url: '/ace',
     },
     {
       key: 'SPACE',
       name: 'SPACE',
-      url: '/space',
+      url: '/ace/space',
     },
   ],
 };
 
 const Nav: FC = () => {
+  const ctx = useContext(Ctx);
   return (
     <div style={{ borderRight: '1px solid #ececec', height: '100%' }}>
       <p style={{ fontWeight: 'bold' }}>{menus.name}</p>
-      {menus.links.map((x) => {
-        return (
-          <Link key={x.key} to={x.url}>
-            <div style={{ padding: '16px' }}>{x.name}</div>
-          </Link>
-        );
-      })}
+      {ctx
+        ? ctx.menus.map((x: any) => {
+            return (
+              <Link key={x.key} to={x.url}>
+                <div style={{ padding: '16px' }}>
+                  {x.name.replace('//GROUP', '____').replace('//TAG', '_')}
+                </div>
+              </Link>
+            );
+          })
+        : null}
     </div>
   );
 };

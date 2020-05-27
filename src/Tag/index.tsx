@@ -1,8 +1,9 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Form, Input, Radio, Table } from 'antd';
 import { Link, RouteComponentProps, useParams } from '@reach/router';
 import * as Api from '../server/tag';
 import { Tag } from '../server/vo';
+import Ctx from '../Nav/ctx';
 import { TYPE } from '../db';
 
 const { Item } = Form;
@@ -13,11 +14,13 @@ const layout = {
 };
 const List: FC<RouteComponentProps> = () => {
   const [list, setList] = useState<Tag[]>([]);
+  const ctx = useContext(Ctx);
   const params = useParams();
   const [form] = Form.useForm();
   const trigger = useCallback(() => {
     setList(Api.list({ space_id: +params.space_id }));
-  }, [params.space_id]);
+    ctx.update();
+  }, [ctx, params.space_id]);
   useEffect(() => {
     trigger();
   }, [trigger]);
@@ -41,13 +44,14 @@ const List: FC<RouteComponentProps> = () => {
           <Button
             type="primary"
             onClick={() => {
-              form.setFieldsValue({ alias: '' });
+              form.setFieldsValue({ alias: '', id: '' });
             }}
           >
             新增
           </Button>
         </div>
         <Table
+          rowKey="id"
           dataSource={list}
           columns={[
             { key: 'id', dataIndex: 'id', title: 'ID' },
@@ -80,7 +84,7 @@ const List: FC<RouteComponentProps> = () => {
                     >
                       修改
                     </Button>
-                    <Link to={`/group/${params.space_id}/${row.id}`}>
+                    <Link to={`/ace/group/${params.space_id}/${row.id}`}>
                       <Button>编辑GROUP</Button>
                     </Link>
                   </div>

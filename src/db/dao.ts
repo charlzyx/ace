@@ -52,9 +52,7 @@ export class GroupXGroup {
   static id = max(TABLE.GROUPXGROUP);
   id = GroupXGroup.id;
   group_id = 0;
-  group_alias = '';
   link_group_id = 0;
-  link_group_alias = '';
 }
 
 const DAO = {
