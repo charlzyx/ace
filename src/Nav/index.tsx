@@ -11,6 +11,11 @@ const menus = {
       url: '/ace',
     },
     {
+      key: 'TABLE',
+      name: 'TABLE',
+      url: '/ace/table',
+    },
+    {
       key: 'SPACE',
       name: 'SPACE',
       url: '/ace/space',

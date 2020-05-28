@@ -46,27 +46,32 @@ const list = <T>(name: TABLE, by: Selector<T>) => {
 
 const query = <T>(name: TABLE, by: Selector<T>) => {
   const t = table(name);
-  return t.find(by) as T | undefined;
+  return t.find((row: T) => {
+    if (row) {
+      return by(row);
+    }
+    return false;
+  }) as T | undefined;
 };
 
 const update = <T>(name: TABLE, at: Selector<T>, updater: Updater<T>) => {
   const t = table(name);
-  const idx = t.findIndex(at);
-  if (idx > -1) {
-    const neo = updater(t[idx]);
-    t[idx] = neo;
-    return neo;
-  }
+  t.forEach((row: T, idx: number) => {
+    if (at(row)) {
+      updater(t[idx]);
+    }
+  });
+  return true;
 };
 
 const del = <T>(name: TABLE, at: Selector<T>) => {
-  const t = table(name);
-  const idx = t.findIndex(at);
-  if (idx > -1) {
-    t.splice(idx, 1);
-    return true;
-  }
-  return false;
+  let t = table(name);
+  t.forEach((row: T, idx: number) => {
+    if (at(row)) {
+      t.splice(idx, 1);
+    }
+  });
+  return true;
 };
 
 const add = <T>(name: TABLE, row: T) => {

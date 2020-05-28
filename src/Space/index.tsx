@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { Button, Form, Input, Table } from 'antd';
+import { Button, Form, Input, Table, message } from 'antd';
 import { Link, RouteComponentProps } from '@reach/router';
 import Ctx from '../Nav/ctx';
 import * as Api from '../server/space';
-import { Space } from '../server/vo';
+import { SpaceVO } from '../server/vo';
 
 const { Item } = Form;
 const layout = {
@@ -12,7 +12,7 @@ const layout = {
 };
 const List: FC<RouteComponentProps> = () => {
   const ctx = useContext(Ctx);
-  const [list, setList] = useState<Space[]>([]);
+  const [list, setList] = useState<SpaceVO[]>([]);
   const [form] = Form.useForm();
   const trigger = useCallback(() => {
     const list = Api.list();
@@ -27,8 +27,10 @@ const List: FC<RouteComponentProps> = () => {
       console.log('values', values);
       if (values.id) {
         Api.update(values);
+        message.success('更新完成');
       } else {
         Api.add(values);
+        message.success('保存成功');
       }
       trigger();
     },

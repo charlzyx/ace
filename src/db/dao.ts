@@ -40,11 +40,7 @@ export class Group {
   alias = '';
   path = '';
   is_root = false;
-  type: TYPE = TYPE.USER;
   tag_id = 0;
-  tag_alias = '';
-  space_id = 0;
-  space_alias = '';
   children: Group[] = [];
 }
 

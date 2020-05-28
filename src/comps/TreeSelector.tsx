@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Tree } from 'antd';
 
 type Props = {
@@ -7,29 +7,41 @@ type Props = {
   tree: any[];
 };
 
+const keys = (tree: any[]): string[] => {
+  let arr: string[] = [];
+  if (Array.isArray(tree)) {
+    tree.forEach((node) => {
+      arr.push(node.key);
+      const child = keys(node.children);
+      if (child) {
+        arr = arr.concat(child);
+      }
+    });
+  } else {
+    return [];
+  }
+  return arr;
+};
+
 const TreeSelector: FC<Props> = ({ value, onChange, tree }) => {
-  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  // const [checkedKeys, setCheckedKeys] = useState<string[]>();
-  // const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const expanded = useRef(false);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>(() => keys(tree));
   const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
   const onExpand = (expandedKeys: any) => {
-    console.log('onExpand', expandedKeys);
-    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-    // or, you can remove all expanded children keys.
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
 
   useEffect(() => {
+    if (expanded.current) return;
     if (Array.isArray(value)) {
+      expanded.current = true;
       setExpandedKeys(value);
     }
   }, [value]);
 
   const onCheck = (checkedKeys: any) => {
-    console.log('onCheck', checkedKeys);
-    // setCheckedKeys(checkedKeys);
     if (onChange) {
       onChange(checkedKeys);
     }

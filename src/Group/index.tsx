@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Col, Form, Input, Row, Tree, message } from 'antd';
-import { RouteComponentProps, useParams } from '@reach/router';
+import { RouteComponentProps, useLocation, useParams } from '@reach/router';
 import * as Api from '../server/group';
 import { TYPE } from '../db';
-import { Group } from '../server/vo';
+import { GroupVO } from '../server/vo';
 import TreeSelector from '../comps/TreeSelector';
 import { transfer } from '../utils';
 
@@ -27,14 +27,56 @@ const watedTypes = (type: TYPE) => {
       return [];
   }
 };
+
+const keys = (tree: any[]): string[] => {
+  let arr: string[] = [];
+  if (Array.isArray(tree)) {
+    tree.forEach((node) => {
+      arr.push(node.key);
+      const child = keys(node.children);
+      if (child) {
+        arr = arr.concat(child);
+      }
+    });
+  } else {
+    return [];
+  }
+  return arr;
+};
+
 const List: FC<RouteComponentProps> = () => {
+  const location = useLocation();
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+
+  const onExpand = (expandedKeys: any) => {
+    setExpandedKeys(expandedKeys);
+    setAutoExpandParent(false);
+  };
   const [tree, setTree] = useState<any>([]);
   const [dataSource, setDataSource] = useState<any>({});
   const params = useParams();
   const [form] = Form.useForm();
 
-  const parenting = useRef<Group>();
-  const [parentNow, setParentNow] = useState<Group>();
+  const parenting = useRef<GroupVO>();
+  const [now, setNow] = useState<GroupVO>();
+  const [up, setUp] = useState(1);
+
+  useEffect(() => {
+    setNow({} as any);
+    parenting.current = undefined;
+    form.resetFields();
+    setUp(-1);
+    setTimeout(() => {
+      setUp(1);
+    });
+  }, [form, location]);
+  useEffect(() => {
+    setUp(-1);
+    setTimeout(() => {
+      setUp(1);
+    });
+  }, [now]);
 
   const trigger = useCallback(() => {
     const root = Api.query({
@@ -65,6 +107,7 @@ const List: FC<RouteComponentProps> = () => {
               type="link"
               onClick={(e) => {
                 e.stopPropagation();
+                form.resetFields();
                 form.setFieldsValue(node);
               }}
             >
@@ -78,7 +121,8 @@ const List: FC<RouteComponentProps> = () => {
                 e.stopPropagation();
                 const neo: any = {};
                 parenting.current = node;
-                setParentNow(node);
+                setNow(node);
+                form.resetFields();
                 form.setFieldsValue(neo);
               }}
             >
@@ -93,7 +137,9 @@ const List: FC<RouteComponentProps> = () => {
         : [];
       return node;
     };
-    setTree([transfer(root || {})]);
+    const tree = [transfer(root || {})];
+    setTree(tree);
+    setExpandedKeys(keys(tree));
   }, [form, params.space_id, params.tag_id]);
 
   useEffect(() => {
@@ -102,29 +148,19 @@ const List: FC<RouteComponentProps> = () => {
 
   const toSubmit = useCallback(
     (values) => {
-      console.log('values', values);
       if (values.id) {
-        Api.update({
-          ...values,
-          space_id: +params.space_id,
-          tag_id: +params.tag_id,
-        });
+        Api.update(values);
+        message.success('更新完成');
       } else {
         if (!parenting.current) {
           return message.error('请先选择父节点');
         }
-        Api.add(
-          {
-            ...values,
-            space_id: +params.space_id,
-            tag_id: +params.tag_id,
-          },
-          parenting.current,
-        );
+        Api.add(values, parenting.current);
+        message.success('保存成功');
       }
       trigger();
     },
-    [params.space_id, params.tag_id, trigger],
+    [trigger],
   );
 
   const tags = useCallback(() => {
@@ -157,48 +193,56 @@ const List: FC<RouteComponentProps> = () => {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: 1 }}>
-        <Tree autoExpandParent defaultExpandAll showLine treeData={tree}></Tree>
+        <Tree
+          expandedKeys={expandedKeys}
+          onExpand={onExpand}
+          autoExpandParent={autoExpandParent}
+          showLine
+          treeData={tree}
+        ></Tree>
       </div>
       <div style={{ flex: 1 }}>
         <h3>编辑区</h3>
         <div>
           <h4>
-            当前父节点: {parentNow?.alias} / {parentNow?.path}
+            当前父节点: {now?.alias} / {now?.path}
           </h4>
         </div>
-        <Form {...layout} form={form} onFinish={toSubmit}>
-          <Item name="id" label="ID" required>
-            <Input disabled></Input>
-          </Item>
-          <Item name="path" label="PATH" required>
-            <Input disabled></Input>
-          </Item>
-          <Item name="alias" label="ALIAS" required>
-            <Input></Input>
-          </Item>
-          {Object.keys(dataSource).map((type) => {
-            return (
-              <div key={type}>
-                <h2>{type}</h2>
-                <div>
-                  {Object.keys(dataSource[type]).map((alias) => {
-                    return (
-                      <Item key={alias} name={['links', alias]} label={alias}>
-                        <TreeSelector
-                          tree={dataSource[type][alias]}
-                        ></TreeSelector>
-                      </Item>
-                    );
-                  })}
+        {up > 0 ? (
+          <Form {...layout} form={form} onFinish={toSubmit}>
+            <Item name="id" label="ID" required>
+              <Input disabled></Input>
+            </Item>
+            <Item name="path" label="PATH" required>
+              <Input disabled></Input>
+            </Item>
+            <Item name="alias" label="ALIAS" required>
+              <Input></Input>
+            </Item>
+            {Object.keys(dataSource).map((type) => {
+              return (
+                <div key={type}>
+                  <h2>{type}</h2>
+                  <div>
+                    {Object.keys(dataSource[type]).map((alias) => {
+                      return (
+                        <Item key={alias} name={['links', alias]} label={alias}>
+                          <TreeSelector
+                            tree={dataSource[type][alias]}
+                          ></TreeSelector>
+                        </Item>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
 
-          <Button type="primary" htmlType="submit">
-            保存
-          </Button>
-        </Form>
+            <Button type="primary" htmlType="submit">
+              保存
+            </Button>
+          </Form>
+        ) : null}
       </div>
     </div>
   );

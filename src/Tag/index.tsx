@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { Button, Form, Input, Radio, Table } from 'antd';
+import { Button, Form, Input, Radio, Table, message } from 'antd';
 import { Link, RouteComponentProps, useParams } from '@reach/router';
 import * as Api from '../server/tag';
-import { Tag } from '../server/vo';
+import { TagVO } from '../server/vo';
 import Ctx from '../Nav/ctx';
 import { TYPE } from '../db';
 
@@ -13,7 +13,7 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const List: FC<RouteComponentProps> = () => {
-  const [list, setList] = useState<Tag[]>([]);
+  const [list, setList] = useState<TagVO[]>([]);
   const ctx = useContext(Ctx);
   const params = useParams();
   const [form] = Form.useForm();
@@ -26,12 +26,13 @@ const List: FC<RouteComponentProps> = () => {
   }, [trigger]);
   const toSubmit = useCallback(
     (values) => {
-      console.log('values', values);
       values.space_id = +params.space_id;
       if (values.id) {
         Api.update(values);
+        message.success('更新完成');
       } else {
         Api.add(values);
+        message.success('保存成功');
       }
       trigger();
     },
